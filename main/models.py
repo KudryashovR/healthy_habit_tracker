@@ -5,6 +5,22 @@ from users.models import CustomUser
 
 
 class Habit(models.Model):
+    """
+    Модель, представляющая привычку пользователя.
+
+    Атрибуты:
+        owner (ForeignKey): Владелец привычки.
+        place (CharField): Место выполнения привычки.
+        time (TimeField): Время выполнения привычки.
+        action (CharField): Описание действия привычки.
+        is_pleasant_habit (BooleanField): Признак приятной привычки.
+        related_habit (ForeignKey): Связанная привычка.
+        frequency (PositiveIntegerField): Периодичность выполнения привычки в днях.
+        reward (CharField): Вознаграждение за выполнение привычки.
+        time_to_complete (PositiveIntegerField): Время на выполнение привычки в секундах.
+        is_public (BooleanField): Признак публичности привычки.
+    """
+
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='habits', verbose_name='владелец')
     place = models.CharField(max_length=255, verbose_name='место')
     time = models.TimeField(verbose_name='время')
@@ -19,9 +35,20 @@ class Habit(models.Model):
     is_public = models.BooleanField(default=False, verbose_name='признак публичности')
 
     def __str__(self):
+        """
+        Возвращает строковое представление привычки.
+        """
+
         return self.action
 
     def clean(self):
+        """
+        Выполняет проверку корректности данных, установленных для привычки.
+
+        Исключения:
+            ValidationError: Если заданы некорректные данные.
+        """
+
         if self.related_habit and self.reward:
             raise ValidationError(
                 "Вы не можете установить одновременно связанную привычку и вознаграждение. Должно быть заполнено только одно из полей.")
