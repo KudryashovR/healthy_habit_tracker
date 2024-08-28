@@ -65,5 +65,5 @@ class Habit(models.Model):
         super().clean()
 
     class Meta:
-        verbose_name = 'пивычка'
-        verbose_name_plural = 'пивычки'
+        verbose_name = 'привычка'
+        verbose_name_plural = 'привычки'
