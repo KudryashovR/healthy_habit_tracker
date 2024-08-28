@@ -1,6 +1,7 @@
 from rest_framework import generics
 
 from main.models import Habit
+from main.paginators import HabitPagination
 from main.serializers import HabitSerializer
 
 
@@ -14,10 +15,12 @@ class HabitListCreate(generics.ListCreateAPIView):
         queryset (QuerySet): Все объекты модели Habit.
         serializer_class (Serializer): Класс сериализатора, который будет использован для сериализации и десериализации
                                        данных.
+        pagination_class (PageNumberPagination): Класс пагинации для разбивки списка объектов на страницы.
     """
 
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer
+    pagination_class = HabitPagination
 
 
 class HabitRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
