@@ -1,10 +1,10 @@
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from main.apps import MainConfig
+from users.apps import UsersConfig
 from users.views import UserCreate
 
-app_name = MainConfig.name
+app_name = UsersConfig.name
 
 
 urlpatterns = [
