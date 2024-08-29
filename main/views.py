@@ -30,7 +30,9 @@ class HabitListCreate(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Habit.objects.filter(owner=self.request.user) | Habit.objects.filter(is_public=True)
+        return Habit.objects.filter(owner=self.request.user) | Habit.objects.filter(
+            is_public=True
+        )
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

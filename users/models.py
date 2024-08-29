@@ -3,6 +3,7 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+
 class UserManager(BaseUserManager):
     """
     Менеджер пользователей для модели User, поддерживающий создание обычных пользователей и суперпользователей.
@@ -68,7 +69,9 @@ class UserManager(BaseUserManager):
             raise ValueError("The given username must be set")
 
         email = self.normalize_email(email)
-        GlobalUserModel = apps.get_model(self.model._meta.app_label, self.model._meta.object_name)
+        GlobalUserModel = apps.get_model(
+            self.model._meta.app_label, self.model._meta.object_name
+        )
         email = GlobalUserModel.normalize_username(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
@@ -108,6 +111,8 @@ class CustomUser(AbstractUser):
             Поле для хранения города пользователя. Может быть пустым.
         avatar : ImageField
             Поле для хранения аватара пользователя. Может быть пустым.
+        tg_id : BigIntegerField
+            Поле для хранения ID пользователя в Telegram.
 
     Метапараметры:
         verbose_name : str
@@ -127,12 +132,17 @@ class CustomUser(AbstractUser):
     """
 
     username = None
-    email = models.EmailField(unique=True, verbose_name='почта')
-    phone = models.CharField(max_length=15, blank=True, null=True, verbose_name='телефон')
-    city = models.CharField(max_length=100, blank=True, null=True, verbose_name='город')
-    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True, verbose_name='аватар')
+    email = models.EmailField(unique=True, verbose_name="почта")
+    phone = models.CharField(
+        max_length=15, blank=True, null=True, verbose_name="телефон"
+    )
+    city = models.CharField(max_length=100, blank=True, null=True, verbose_name="город")
+    avatar = models.ImageField(
+        upload_to="avatars/", blank=True, null=True, verbose_name="аватар"
+    )
+    tg_id = models.BigIntegerField(verbose_name="телеграм ID")
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     objects = UserManager()
@@ -141,5 +151,5 @@ class CustomUser(AbstractUser):
         return self.email
 
     class Meta:
-        verbose_name = 'пользователь'
-        verbose_name_plural = 'пользователи'
+        verbose_name = "пользователь"
+        verbose_name_plural = "пользователи"
