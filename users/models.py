@@ -49,7 +49,8 @@ class UserManager(BaseUserManager):
         Аргументы:
             email (str): Email пользователя.
             password (str, optional): Пароль пользователя.
-            extra_fields (dict): Дополнительные поля для пользователя. По умолчанию содержит is_staff=False и is_superuser=False.
+            extra_fields (dict): Дополнительные поля для пользователя. По умолчанию содержит is_staff=False
+                                 и is_superuser=False.
 
         Возвращает:
             User: Созданный объект пользователя.
@@ -68,7 +69,8 @@ class UserManager(BaseUserManager):
             email (str): Email суперпользователя.
             telegram_id (int): Идентификатор Телеграмма суперпользователя.
             password (str, optional): Пароль суперпользователя.
-            extra_fields (dict): Дополнительные поля для пользователя. По умолчанию содержит is_staff=True и is_superuser=True.
+            extra_fields (dict): Дополнительные поля для пользователя. По умолчанию содержит is_staff=True
+                                 и is_superuser=True.
 
         Возвращает:
             User: Созданный объект суперпользователя.
