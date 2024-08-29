@@ -69,7 +69,8 @@ class Habit(models.Model):
 
         if self.related_habit and self.reward:
             raise ValidationError(
-                "Вы не можете установить одновременно связанную привычку и вознаграждение. Должно быть заполнено только одно из полей."
+                "Вы не можете установить одновременно связанную привычку и вознаграждение. Должно быть заполнено "
+                "только одно из полей."
             )
 
         if self.is_pleasant_habit and (self.related_habit or self.reward):
