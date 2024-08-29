@@ -29,8 +29,9 @@ def send_tg_notification(action, chat_id, reward=None):
     """
 
     if reward:
-        message = f"Напоминаю о выполнении задачи {action}. Выполнив эту задачу вы можете получить {reward}!"
+        message = (f"Напоминаю о выполнении задачи {action} через 15 минут. Выполнив эту задачу вы можете получить "
+                   f"{reward}!")
     else:
-        message = f"Напоминаю о выполнении задачи {action}."
+        message = f"Напоминаю о выполнении задачи {action} через 15 минут."
 
     send_telegram_message(chat_id, message)

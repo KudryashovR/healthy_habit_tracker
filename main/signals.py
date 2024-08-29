@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
@@ -46,7 +46,7 @@ def create_or_update_periodic_task(sender, instance, created, **kwargs):
             "interval": schedule,
             "task": "main.tasks.send_tg_notification",
             "start_time": timezone.make_aware(
-                datetime.combine(datetime.now().date(), instance.time)
+                datetime.combine(datetime.now().date(), instance.time) - timedelta(minutes=15)
             ),
             "kwargs": json.dumps(
                 {
