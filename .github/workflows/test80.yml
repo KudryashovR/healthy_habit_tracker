@@ -34,8 +34,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install django psycopg2-binary coverage
 
+      - name: Create coverage configuration
+        run: |
+          echo "[run]" > .coveragerc
+          echo "omit = */migrations/*,*/tests/*,*/config/*" >> .coveragerc
+          echo "[report]" >> .coveragerc
+          echo "exclude_lines =" >> .coveragerc
+          echo "    pragma: no cover" >> .coveragerc
+          echo "    def __str__" >> .coveragerc
+          echo "    if self\.debug" >> .coveragerc
+          echo "    def __repr__" >> .coveragerc
+
       - name: Run tests with coverage
         run: |
           python manage.py migrate
-          coverage run --source='.' manage.py test
+          coverage run --rcfile=.coveragerc --source='.' manage.py test
           coverage report -m --fail-under=80
