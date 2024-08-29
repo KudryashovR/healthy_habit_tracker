@@ -131,6 +131,7 @@ class CustomUser(AbstractUser):
     phone = models.CharField(max_length=15, blank=True, null=True, verbose_name='телефон')
     city = models.CharField(max_length=100, blank=True, null=True, verbose_name='город')
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True, verbose_name='аватар')
+    tg_id = models.BigIntegerField(null=True, blank=True, verbose_name='телеграм ID')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
