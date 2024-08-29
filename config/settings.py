@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "drf_yasg",
     "django_celery_beat",
+    'corsheaders',
     "users",
     "main",
 ]
@@ -59,6 +60,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -171,3 +173,9 @@ AUTH_USER_MODEL = "users.CustomUser"
 
 TELEGRAM_URL = env("TELEGRAM_URL")
 TELEGRAM_TOKEN = env("TELEGRAM_TOKEN")
+
+CORS_ALLOWED_ORIGINS = [env("CORS_ALLOWED_ORIGINS")]
+
+CSRF_TRUSTED_ORIGINS = [env("CSRF_TRUSTED_ORIGINS")]
+
+CORS_ALLOW_ALL_ORIGINS = False
