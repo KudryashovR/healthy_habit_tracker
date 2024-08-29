@@ -1,0 +1,12 @@
+[run]
+omit =
+    */migrations/*
+    */tests/*
+    */config/*
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __str__
+    if self\.debug
+    def __repr__
