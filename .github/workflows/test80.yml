@@ -37,7 +37,7 @@ jobs:
       - name: Create coverage configuration
         run: |
           echo "[run]" > .coveragerc
-          echo "omit = */migrations/*,*/tests/*,*/config/*" >> .coveragerc
+          echo "omit = */migrations/*,*/tests/*,*/config/*,*/__init__.py*,*manage.py*" >> .coveragerc
           echo "[report]" >> .coveragerc
           echo "exclude_lines =" >> .coveragerc
           echo "    pragma: no cover" >> .coveragerc
