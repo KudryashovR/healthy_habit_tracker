@@ -19,6 +19,7 @@ setuptools = "^74.0.0"
 redis = "^5.0.8"
 celery = "^5.4.0"
 django-celery-beat = "^2.7.0"
+python-telegram-bot = "^21.4"
 
 [tool.poetry.group.dev.dependencies]
 ipython = "^8.26.0"
