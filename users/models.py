@@ -6,65 +6,28 @@ from django.db import models
 
 class UserManager(BaseUserManager):
     """
-    Менеджер пользователей для модели User, поддерживающий создание обычных пользователей и суперпользователей.
-
-    Атрибуты:
-    ----------
-    use_in_migrations : bool
-        Определяет, может ли этот менеджер быть использован в миграциях.
-
-    Методы:
-    -------
-    _create_user(email, password, **extra_fields):
-        Внутренний метод для создания и сохранения пользователя с заданным email и паролем.
-
-    create_user(email, password=None, **extra_fields):
-        Создает и сохраняет обычного пользователя с заданным email и паролем.
-
-    create_superuser(email, password=None, **extra_fields):
-        Создает и сохраняет суперпользователя с заданным email и паролем.
-
-    Описание методов:
-    -----------------
-    _create_user(email, password, **extra_fields):
-        Этот метод выполняет основную логику создания и сохранения пользователя. Проверяет наличие email, нормализует
-        его, создает экземпляр модели пользователя, устанавливает пароль и сохраняет пользователя в базе данных.
-
-        Параметры:
-        - email (str): Электронная почта пользователя.
-        - password (str): Пароль пользователя.
-        - **extra_fields: Прочие поля, которые необходимо установить для пользователя.
-
-        Исключения:
-        - ValueError: Если email не указан.
-
-    create_user(email, password=None, **extra_fields):
-        Этот метод используется для создания обычного пользователя. Он вызывает внутренний метод `_create_user`,
-        устанавливая флаги `is_staff` и `is_superuser` в False.
-
-        Параметры:
-        - email (str): Электронная почта пользователя.
-        - password (str, optional): Пароль пользователя.
-        - **extra_fields: Прочие поля, которые необходимо установить для пользователя.
-
-    create_superuser(email, password=None, **extra_fields):
-        Этот метод используется для создания суперпользователя. Он вызывает внутренний метод `_create_user`,
-        устанавливая флаги `is_staff` и `is_superuser` в True. Также проверяет, что эти флаги действительно установлены
-        в True.
-
-        Параметры:
-        - email (str): Электронная почта пользователя.
-        - password (str, optional): Пароль пользователя. По умолчанию None.
-        - **extra_fields: Прочие поля, которые необходимо установить для пользователя.
-
-        Исключения:
-        - ValueError: Если `is_staff` не установлен в True.
-        - ValueError: Если `is_superuser` не установлен в True.
+    Менеджер пользователей для пользовательской модели User с использованием email вместо имени пользователя.
+    Содержит методы для создания обычного пользователя и суперпользователя.
     """
 
     use_in_migrations = True
 
     def _create_user(self, email, password, **extra_fields):
+        """
+        Создаёт и сохраняет пользователя с указанным email и паролем.
+
+        Аргументы:
+            email (str): Email пользователя.
+            password (str): Пароль пользователя.
+            extra_fields (dict): Дополнительные поля для пользователя.
+
+        Возвращает:
+            User: Созданный объект пользователя.
+
+        Исключения:
+            ValueError: Если email не установлен.
+        """
+
         if not email:
             raise ValueError("The given username must be set")
 
@@ -80,20 +43,53 @@ class UserManager(BaseUserManager):
         return user
 
     def create_user(self, email, password=None, **extra_fields):
+        """
+        Создаёт обычного пользователя с указанным email и паролем.
+
+        Аргументы:
+            email (str): Email пользователя.
+            password (str, optional): Пароль пользователя.
+            extra_fields (dict): Дополнительные поля для пользователя. По умолчанию содержит is_staff=False и is_superuser=False.
+
+        Возвращает:
+            User: Созданный объект пользователя.
+        """
+
         extra_fields.setdefault("is_staff", False)
         extra_fields.setdefault("is_superuser", False)
 
         return self._create_user(email, password, **extra_fields)
 
-    def create_superuser(self, email, password=None, **extra_fields):
+    def create_superuser(self, email, tg_id, password=None, **extra_fields):
+        """
+        Создаёт суперпользователя с указанным email, идентификатором Телеграмма и паролем.
+
+        Аргументы:
+            email (str): Email суперпользователя.
+            telegram_id (int): Идентификатор Телеграмма суперпользователя.
+            password (str, optional): Пароль суперпользователя.
+            extra_fields (dict): Дополнительные поля для пользователя. По умолчанию содержит is_staff=True и is_superuser=True.
+
+        Возвращает:
+            User: Созданный объект суперпользователя.
+
+        Исключения:
+            ValueError: Если is_staff или is_superuser не установлены в True.
+        """
+
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
 
         if extra_fields.get("is_staff") is not True:
-            raise ValueError("Superuser must have is_staff=True.")
+            raise ValueError("Суперпользователь должен иметь is_staff=True.")
 
         if extra_fields.get("is_superuser") is not True:
-            raise ValueError("Superuser must have is_superuser=True.")
+            raise ValueError("Суперпользователь должен иметь is_superuser=True.")
+
+        if not tg_id:
+            raise ValueError("Необходимо указать идентификатор Телеграмма для суперпользователя.")
+
+        extra_fields["tg_id"] = tg_id
 
         return self._create_user(email, password, **extra_fields)
 
@@ -140,10 +136,10 @@ class CustomUser(AbstractUser):
     avatar = models.ImageField(
         upload_to="avatars/", blank=True, null=True, verbose_name="аватар"
     )
-    tg_id = models.BigIntegerField(verbose_name="телеграм ID")
+    tg_id = models.BigIntegerField(verbose_name="телеграм ID", unique=True)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['tg_id']
 
     objects = UserManager()
 
