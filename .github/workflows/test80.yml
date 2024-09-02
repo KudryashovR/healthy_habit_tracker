@@ -29,22 +29,24 @@ jobs:
         with:
           python-version: 3.12
 
-      - name: Install dependencies
+      - name: Install Poetry
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
+
+      - name: Install dependencies
+        run: |
           poetry install
-          poetry shell
 
       - name: Create coverage configuration
         run: |
           echo "[run]" > .coveragerc
-          echo "omit = */migrations/*,*/tests/*,*/config/*,*/__init__.py*,*manage.py*" >> .coveragerc
+          echo "omit = */migrations/*,*/tests/*,*/config/*,*/init.py*,*manage.py*" >> .coveragerc
           echo "[report]" >> .coveragerc
           echo "exclude_lines =" >> .coveragerc
           echo "    pragma: no cover" >> .coveragerc
-          echo "    def __str__" >> .coveragerc
+          echo "    def str" >> .coveragerc
           echo "    if self\.debug" >> .coveragerc
-          echo "    def __repr__" >> .coveragerc
+          echo "    def repr" >> .coveragerc
 
       - name: Run tests with coverage
         env:
@@ -56,13 +58,9 @@ jobs:
           CELERY_RESULT_BACKEND: ${{ secrets.CELERY_RESULT_BACKEND }}
           TELEGRAM_URL: https://api.telegram.org
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          CORS_ALLOWED_ORIGINS:
-            http://localhost:3000
-            http://127.0.0.1:3000
-          CSRF_TRUSTED_ORIGINS:
-            http://localhost:3000
-            http://127.0.0.1:3000
+          CORS_ALLOWED_ORIGINS: http://localhost:3000,http://127.0.0.1:3000
+          CSRF_TRUSTED_ORIGINS: http://localhost:3000,http://127.0.0.1:3000
         run: |
-          python manage.py migrate
-          coverage run --rcfile=.coveragerc --source='.' manage.py test
-          coverage report -m --fail-under=80
+          poetry run python manage.py migrate
+          poetry run coverage run --rcfile=.coveragerc --source='.' manage.py test
+          poetry run coverage report -m --fail-under=80
