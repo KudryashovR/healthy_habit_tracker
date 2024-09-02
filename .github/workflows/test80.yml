@@ -37,6 +37,10 @@ jobs:
         run: |
           poetry install
 
+      - name: Create necessary directories
+        run: |
+          mkdir -p home/runner/work/healthy_habit_tracker/healthy_habit_tracker/static
+
       - name: Create coverage configuration
         run: |
           echo "[run]" > .coveragerc
