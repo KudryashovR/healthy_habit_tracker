@@ -115,43 +115,9 @@ poetry run coverage report
 │   ├── asgi.py
 │   ├── celery.py
 │   ├── __init__.py
-│   ├── __pycache__
-│   │   ├── celery.cpython-312.pyc
-│   │   ├── __init__.cpython-312.pyc
-│   │   ├── settings.cpython-312.pyc
-│   │   ├── urls.cpython-312.pyc
-│   │   └── wsgi.cpython-312.pyc
 │   ├── settings.py
 │   ├── urls.py
 │   └── wsgi.py
-├── htmlcov
-│   ├── class_index.html
-│   ├── coverage_html_cb_6fb7b396.js
-│   ├── favicon_32_cb_58284776.png
-│   ├── function_index.html
-│   ├── index.html
-│   ├── keybd_closed_cb_ce680311.png
-│   ├── status.json
-│   ├── style_cb_8e611ae1.css
-│   ├── z_15c4a824ab2728a3_admin_py.html
-│   ├── z_15c4a824ab2728a3_apps_py.html
-│   ├── z_15c4a824ab2728a3_models_py.html
-│   ├── z_15c4a824ab2728a3_paginators_py.html
-│   ├── z_15c4a824ab2728a3_permissions_py.html
-│   ├── z_15c4a824ab2728a3_serializers_py.html
-│   ├── z_15c4a824ab2728a3_services_py.html
-│   ├── z_15c4a824ab2728a3_signals_py.html
-│   ├── z_15c4a824ab2728a3_tasks_py.html
-│   ├── z_15c4a824ab2728a3_tests_py.html
-│   ├── z_15c4a824ab2728a3_urls_py.html
-│   ├── z_15c4a824ab2728a3_views_py.html
-│   ├── z_f6c68bdc9becfc1e_admin_py.html
-│   ├── z_f6c68bdc9becfc1e_apps_py.html
-│   ├── z_f6c68bdc9becfc1e_models_py.html
-│   ├── z_f6c68bdc9becfc1e_serializers_py.html
-│   ├── z_f6c68bdc9becfc1e_tests_py.html
-│   ├── z_f6c68bdc9becfc1e_urls_py.html
-│   └── z_f6c68bdc9becfc1e_views_py.html
 ├── LICENSE
 ├── main
 │   ├── admin.py
@@ -161,40 +127,15 @@ poetry run coverage report
 │   │   ├── 0001_initial.py
 │   │   ├── 0002_alter_habit_options.py
 │   │   ├── __init__.py
-│   │   └── __pycache__
-│   │       ├── 0001_initial.cpython-312.pyc
-│   │       ├── 0002_alter_habit_options.cpython-312.pyc
-│   │       └── __init__.cpython-312.pyc
 │   ├── models.py
 │   ├── paginators.py
 │   ├── permissions.py
-│   ├── __pycache__
-│   │   ├── admin.cpython-312.pyc
-│   │   ├── apps.cpython-312.pyc
-│   │   ├── __init__.cpython-312.pyc
-│   │   ├── models.cpython-312.pyc
-│   │   ├── paginators.cpython-312.pyc
-│   │   ├── permissions.cpython-312.pyc
-│   │   ├── serializers.cpython-312.pyc
-│   │   ├── services.cpython-312.pyc
-│   │   ├── signals.cpython-312.pyc
-│   │   ├── tasks.cpython-312.pyc
-│   │   ├── tests.cpython-312.pyc
-│   │   ├── urls.cpython-312.pyc
-│   │   └── views.cpython-312.pyc
 │   ├── serializers.py
 │   ├── services.py
 │   ├── signals.py
 │   ├── tasks.py
 │   ├── tests
 │   │   ├── __init__.py
-│   │   ├── __pycache__
-│   │   │   ├── __init__.cpython-312.pyc
-│   │   │   ├── test_habit_model.cpython-312.pyc
-│   │   │   ├── test_permissions.cpython-312.pyc
-│   │   │   ├── test_send_telegram_message.cpython-312.pyc
-│   │   │   ├── test_send_tg_notification.cpython-312.pyc
-│   │   │   └── test_signals.cpython-312.pyc
 │   │   ├── test_habit_model.py
 │   │   ├── test_permissions.py
 │   │   ├── test_send_telegram_message.py
@@ -204,7 +145,6 @@ poetry run coverage report
 │   └── views.py
 ├── manage.py
 ├── media
-├── poetry.lock
 ├── pyproject.toml
 ├── README.md
 ├── static
@@ -218,22 +158,7 @@ poetry run coverage report
     │   ├── 0003_alter_customuser_tg_id.py
     │   ├── 0004_alter_customuser_tg_id.py
     │   ├── __init__.py
-    │   └── __pycache__
-    │       ├── 0001_initial.cpython-312.pyc
-    │       ├── 0002_customuser_tg_id.cpython-312.pyc
-    │       ├── 0003_alter_customuser_tg_id.cpython-312.pyc
-    │       ├── 0004_alter_customuser_tg_id.cpython-312.pyc
-    │       └── __init__.cpython-312.pyc
     ├── models.py
-    ├── __pycache__
-    │   ├── admin.cpython-312.pyc
-    │   ├── apps.cpython-312.pyc
-    │   ├── __init__.cpython-312.pyc
-    │   ├── models.cpython-312.pyc
-    │   ├── serializers.cpython-312.pyc
-    │   ├── tests.cpython-312.pyc
-    │   ├── urls.cpython-312.pyc
-    │   └── views.cpython-312.pyc
     ├── serializers.py
     ├── tests.py
     ├── urls.py
