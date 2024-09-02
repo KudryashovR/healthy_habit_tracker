@@ -13,6 +13,7 @@ jobs:
           POSTGRES_DB: test_db
           POSTGRES_USER: user
           POSTGRES_PASSWORD: password
+          SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
