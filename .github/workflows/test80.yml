@@ -13,7 +13,6 @@ jobs:
           POSTGRES_DB: test_db
           POSTGRES_USER: user
           POSTGRES_PASSWORD: password
-          SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -47,6 +46,8 @@ jobs:
           echo "    def __repr__" >> .coveragerc
 
       - name: Run tests with coverage
+        env:
+          SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
         run: |
           python manage.py migrate
           coverage run --rcfile=.coveragerc --source='.' manage.py test
