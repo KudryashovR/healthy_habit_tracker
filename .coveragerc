@@ -3,6 +3,8 @@ omit =
     */migrations/*
     */tests/*
     */config/*
+    */__init__.py*
+    *manage.py*
 
 [report]
 exclude_lines =
