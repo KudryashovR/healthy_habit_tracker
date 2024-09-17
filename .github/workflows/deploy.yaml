@@ -1,30 +1,49 @@
+name: Deploy on push to main
+
 on:
-  workflow_dispatch:
-env:
-  # Setting an environment variable with the value of a configuration variable
-  env_var: ${{ vars.ENV_CONTEXT_VAR }}
+  push:
+    branches:
+      - main
 
 jobs:
-  display-variables:
-    name: ${{ vars.JOB_NAME }}
-    # You can use configuration variables with the vars context for dynamic jobs
-    if: ${{ vars.USE_VARIABLES == 'true' }}
-    runs-on: ${{ vars.RUNNER }}
-    environment: ${{ vars.ENVIRONMENT_STAGE }}
+  deploy:
+    runs-on: [self-hosted]
+
     steps:
-    - name: Use variables
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Copy environment variables to .env file
       run: |
-        echo "repository variable : $REPOSITORY_VAR"
-        echo "organization variable : $ORGANIZATION_VAR"
-        echo "overridden variable : $OVERRIDE_VAR"
-        echo "variable from shell environment : $env_var"
+        echo "CELERY_BROKER_URL=${{ secrets.CELERY_BROKER_URL }}" >> .env
+        echo "CELERY_RESULT_BACKEND=${{ secrets.CELERY_RESULT_BACKEND }}" >> .env
+        echo "CORS_ALLOWED_ORIGINS=${{ secrets.CORS_ALLOWED_ORIGINS }}" >> .env
+        echo "CSRF_TRUSTED_ORIGINS=${{ secrets.CSRF_TRUSTED_ORIGINS }}" >> .env
+        echo "DATABASES_HOST=${{ secrets.DATABASES_HOST }}" >> .env
+        echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env
+        echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
+        echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
+        echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
+        echo "TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}" >> .env
+        echo "TELEGRAM_URL=${{ secrets.TELEGRAM_URL }}" >> .env
       env:
-        REPOSITORY_VAR: ${{ vars.REPOSITORY_VAR }}
-        ORGANIZATION_VAR: ${{ vars.ORGANIZATION_VAR }}
-        OVERRIDE_VAR: ${{ vars.OVERRIDE_VAR }}
-        
-    - name: ${{ vars.HELLO_WORLD_STEP }}
-      if: ${{ vars.HELLO_WORLD_ENABLED == 'true' }}
-      uses: actions/hello-world-javascript-action@main
-      with:
-        who-to-greet: ${{ vars.GREET_NAME }}
+        CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL }}
+        CELERY_RESULT_BACKEND: ${{ secrets.CELERY_RESULT_BACKEND }}
+        CORS_ALLOWED_ORIGINS: ${{ secrets.CORS_ALLOWED_ORIGINS }}
+        CSRF_TRUSTED_ORIGINS: ${{ secrets.CSRF_TRUSTED_ORIGINS }}
+        DATABASES_HOST: ${{ secrets.DATABASES_HOST }}
+        POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        TELEGRAM_URL: ${{ secrets.TELEGRAM_URL }}
+
+    - name: Pull latest project version from repository
+      run: git pull origin main
+
+    - name: Run Docker Compose
+      run: |
+        docker-compose down
+        docker system prune
+        docker-compose up -d --build
