@@ -10,6 +10,9 @@ jobs:
     runs-on: [self-hosted]
 
     steps:
+    - name: Magic outside Hogwarts
+      run: sudo chmod -R 777 .
+      
     - name: Checkout repository
       uses: actions/checkout@v2
 
