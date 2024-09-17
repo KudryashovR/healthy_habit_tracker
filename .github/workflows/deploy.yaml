@@ -30,6 +30,8 @@ jobs:
         echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
         echo "TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}" >> .env
         echo "TELEGRAM_URL=${{ secrets.TELEGRAM_URL }}" >> .env
+        mkdir static
+        mkdir media
       env:
         CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL }}
         CELERY_RESULT_BACKEND: ${{ secrets.CELERY_RESULT_BACKEND }}
