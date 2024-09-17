@@ -10,8 +10,8 @@ jobs:
     runs-on: [self-hosted]
 
     steps:
-    - name: Pull latest project version from repository
-      run: git pull origin main
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
     - name: Copy environment variables to .env file
       run: |
