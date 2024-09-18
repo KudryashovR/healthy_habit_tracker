@@ -49,4 +49,4 @@ urlpatterns = [
     path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
     path("users/", include("users.urls"), name="users"),
     path("api/", include("main.urls"), name="main"),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
