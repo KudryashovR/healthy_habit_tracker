@@ -60,7 +60,7 @@ services:
     build: .
     command: bash -c "poetry add gunicorn &&
                       poetry run python manage.py migrate &&
-                      poetry run python manage.py collectstatic &&
+                      poetry run python manage.py collectstatic --noinput &&
                       poetry run gunicorn config.wsgi:application --bind 0.0.0.0:8000"
     container_name: web
     volumes:
