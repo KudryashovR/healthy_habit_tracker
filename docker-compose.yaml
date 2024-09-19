@@ -58,8 +58,7 @@ services:
 
   web:
     build: .
-    command: bash -c "mkdir /app/static &&
-                      poetry add gunicorn &&
+    command: bash -c "poetry add gunicorn &&
                       poetry run python manage.py migrate &&
                       poetry run python manage.py collectstatic --noinput &&
                       poetry run gunicorn config.wsgi:application --bind 0.0.0.0:8000"
