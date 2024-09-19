@@ -1,0 +1,52 @@
+name: Deploy on push to main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: [self-hosted]
+
+    steps:
+    - name: Magic outside Hogwarts
+      run: sudo chmod -R 777 .
+      
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Copy environment variables to .env file
+      run: |
+        rm -f .env
+        echo "CELERY_BROKER_URL=${{ secrets.CELERY_BROKER_URL }}" >> .env
+        echo "CELERY_RESULT_BACKEND=${{ secrets.CELERY_RESULT_BACKEND }}" >> .env
+        echo "CORS_ALLOWED_ORIGINS=${{ secrets.CORS_ALLOWED_ORIGINS }}" >> .env
+        echo "CSRF_TRUSTED_ORIGINS=${{ secrets.CSRF_TRUSTED_ORIGINS }}" >> .env
+        echo "DATABASES_HOST=${{ secrets.DATABASES_HOST }}" >> .env
+        echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env
+        echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
+        echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
+        echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
+        echo "TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}" >> .env
+        echo "TELEGRAM_URL=${{ secrets.TELEGRAM_URL }}" >> .env
+        mkdir static
+        mkdir media
+      env:
+        CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL }}
+        CELERY_RESULT_BACKEND: ${{ secrets.CELERY_RESULT_BACKEND }}
+        CORS_ALLOWED_ORIGINS: ${{ secrets.CORS_ALLOWED_ORIGINS }}
+        CSRF_TRUSTED_ORIGINS: ${{ secrets.CSRF_TRUSTED_ORIGINS }}
+        DATABASES_HOST: ${{ secrets.DATABASES_HOST }}
+        POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        TELEGRAM_URL: ${{ secrets.TELEGRAM_URL }}
+
+    - name: Run Docker Compose
+      run: |
+        sudo docker compose down
+        sudo docker system prune
+        sudo docker compose up -d --build
