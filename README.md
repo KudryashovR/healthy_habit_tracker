@@ -52,15 +52,16 @@
 ### Предварительные требования
 
 - Python 3.12
-- Установленный Poetry (или другой менеджер зависимостей)
+- Установленный Poetry
+- (Опционально) установленный docker
 
 ### Установка
 
 1. Клонируйте репозиторий
 
 ```bash
-   git clone https://github.com/ваш-профиль/название-репозитория.git
-   cd название-репозитория
+   git clone https://github.com/KudryashovR/healthy_habit_tracker.git
+   cd healthy_habit_tracker
 ```
 
 2. Установите зависимости
@@ -72,6 +73,12 @@
 3. Настройте переменные окружения
 
    Создайте файл .env в корне проекта и добавьте необходимые переменные окружения согласно файла `.env.example`
+
+4*. Для установки с использованием docker-compose
+
+```bash
+  docker-compose up -d —build
+```
 
 ### Миграции базы данных
 
@@ -105,62 +112,5 @@ poetry run coverage report
 
 ## API Документация
 
-- Swagger UI доступен по адресу: http://localhost:8000/swagger/
-- Redoc доступен по адресу: http://localhost:8000/redoc/
-
-## Структура проекта
-
-```
-├── config
-│   ├── asgi.py
-│   ├── celery.py
-│   ├── __init__.py
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-├── LICENSE
-├── main
-│   ├── admin.py
-│   ├── apps.py
-│   ├── __init__.py
-│   ├── migrations
-│   │   ├── 0001_initial.py
-│   │   ├── 0002_alter_habit_options.py
-│   │   ├── __init__.py
-│   ├── models.py
-│   ├── paginators.py
-│   ├── permissions.py
-│   ├── serializers.py
-│   ├── services.py
-│   ├── signals.py
-│   ├── tasks.py
-│   ├── tests
-│   │   ├── __init__.py
-│   │   ├── test_habit_model.py
-│   │   ├── test_permissions.py
-│   │   ├── test_send_telegram_message.py
-│   │   ├── test_send_tg_notification.py
-│   │   └── test_signals.py
-│   ├── urls.py
-│   └── views.py
-├── manage.py
-├── media
-├── pyproject.toml
-├── README.md
-├── static
-└── users
-    ├── admin.py
-    ├── apps.py
-    ├── __init__.py
-    ├── migrations
-    │   ├── 0001_initial.py
-    │   ├── 0002_customuser_tg_id.py
-    │   ├── 0003_alter_customuser_tg_id.py
-    │   ├── 0004_alter_customuser_tg_id.py
-    │   ├── __init__.py
-    ├── models.py
-    ├── serializers.py
-    ├── tests.py
-    ├── urls.py
-    └── views.py
-```
+- Swagger UI доступен по адресу: /swagger/
+- Redoc доступен по адресу: /redoc/
